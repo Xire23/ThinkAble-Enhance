@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ThinkAble | Sign Up</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>ThinkAble Sign Up</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Create an Account</h2>
+    <form>
+      <div>
+        <label for="su_email">Email</label>
+        <input id="su_email" type="email" required>
+      </div>
+      <div>
+        <label for="su_password">Password</label>
+        <input id="su_password" type="password" required>
+      </div>
+      <div>
+        <label for="su_role">Role</label>
+        <select id="su_role">
+          <option value="student">Student</option>
+          <option value="parent">Parent</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <button class="btn" type="submit">Sign Up (Mock)</button>
+    </form>
+    <p style="margin-top:1rem;font-size:0.9rem;">This is a mock page for your prototype – integrate real auth later.</p>
+  </main>
+</body>
+</html>

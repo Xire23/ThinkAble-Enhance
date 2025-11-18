@@ -1,0 +1,21 @@
+Admin login
+
+Email: admin@thinkable.com
+
+Password: admin123
+
+
+
+Parent login
+
+Email: parent@thinkable.com
+
+Password: parent123
+
+
+
+Student login
+
+Email: student@thinkable.com
+
+Password: student123

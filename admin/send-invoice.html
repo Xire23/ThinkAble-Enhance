@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Send Invoice</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header>
+    <h1>Send Invoice (Mock)</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="subscription-status.html">Back to Subscriptions</a>
+      <a href="../logout.html">Logout</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Invoice Form</h2>
+    <form>
+      <div>
+        <label for="inv_parent_email">Parent Email</label>
+        <input id="inv_parent_email" type="email" placeholder="parent@example.com" required>
+      </div>
+      <div>
+        <label for="inv_amount">Amount</label>
+        <input id="inv_amount" type="number" placeholder="29.90" step="0.01" required>
+      </div>
+      <div>
+        <label for="inv_notes">Notes</label>
+        <textarea id="inv_notes" placeholder="Eg. November subscription fee."></textarea>
+      </div>
+      <button type="button" class="btn" onclick="alert('Mock send – integrate email/billing later');">Send Invoice</button>
+    </form>
+  </main>
+  <script src="../script.js"></script>
+</body>
+</html>

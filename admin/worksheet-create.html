@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Worksheet</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header>
+    <h1>Create Worksheet</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="manage-worksheets.html">Back to Manage</a>
+      <a href="worksheet-read.html">Worksheet List</a>
+      <a href="../logout.html">Logout</a>
+    </nav>
+  </header>
+  <main>
+    <h2>New Worksheet</h2>
+    <form id="worksheetCreateForm">
+      <div>
+        <label for="ws_title">Title</label>
+        <input id="ws_title" required>
+      </div>
+      <div>
+        <label for="ws_subject">Subject / Topic</label>
+        <input id="ws_subject" required>
+      </div>
+      <div>
+        <label for="ws_grade">Recommended Level</label>
+        <input id="ws_grade" placeholder="e.g. P3, P4, Mixed" required>
+      </div>
+      <div>
+        <label for="ws_description">Short Description</label>
+        <textarea id="ws_description" placeholder="What skill does this worksheet practise?"></textarea>
+      </div>
+      <div>
+        <label for="ws_status">Status</label>
+        <select id="ws_status">
+          <option value="draft">Draft</option>
+          <option value="published">Published</option>
+        </select>
+      </div>
+      <div class="questions-header">Questions &amp; Answer Key</div>
+      <p style="font-size:0.85rem;">Add one or more questions. Answers are used for auto-marking later.</p>
+      <div id="questionsContainer"></div>
+      <button type="button" id="addQuestionBtn" class="btn secondary" style="margin-top:0.5rem;">+ Add Question</button>
+      <div style="margin-top:1rem;">
+        <button type="submit" class="btn">Save Worksheet</button>
+      </div>
+    </form>
+  </main>
+  <script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin | Home</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header>
+    <h1>ThinkAble Admin</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="manage-student.html">Students</a>
+      <a href="manage-worksheets.html">Worksheets</a>
+      <a href="../logout.html">Logout</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Admin Homepage</h2>
+    <p>Manage students, worksheets and subscriptions.</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Manage Students</h3>
+        <p>Create and assign student profiles (placeholder – no CRUD here yet).</p>
+        <a class="btn" href="manage-student.html">Open</a>
+      </div>
+      <div class="card" style="background: var(--green-light); border-color:#c8e6c9;">
+        <h3>Manage Worksheets</h3>
+        <p>Build, edit and publish critical thinking worksheets.</p>
+        <a class="btn secondary" href="manage-worksheets.html">Open</a>
+      </div>
+      <div class="card">
+        <h3>Subscriptions</h3>
+        <p>View parent subscription status and send invoices.</p>
+        <a class="btn" href="subscription-status.html">View</a>
+      </div>
+    </div>
+  </main>
+  <script src="../script.js"></script>
+</body>
+</html>
