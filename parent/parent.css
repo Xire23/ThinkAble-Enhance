@@ -1,0 +1,43 @@
+/* -----------------------------------
+          PARENT DASHBOARD
+------------------------------------ */
+
+.parent-section-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--green);
+}
+
+/* Progress View */
+.progress-card {
+  background: var(--blue-light);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #bbdefb;
+  margin-bottom: 1rem;
+}
+
+.parent-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.parent-table th {
+  background: var(--green-light);
+}
+
+/* Parent PIN */
+.pin-input {
+  width: 120px;
+  padding: 0.5rem;
+  font-size: 1.4rem;
+  text-align: center;
+  border-radius: 8px;
+  border: 2px solid var(--blue);
+}
+
+.lock-warning {
+  color: #d32f2f;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}

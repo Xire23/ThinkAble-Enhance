@@ -2,13 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Worksheet 1</title>
+  <title>Worksheet 1 – Alphabets a–f</title>
   <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../student.css">
+  <style>
+    .choice-box {
+      padding: 10px;
+      margin: 5px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      display: inline-block;
+      cursor: pointer;
+      font-size: 1.2rem;
+      min-width: 40px;
+      text-align: center;
+    }
+    .selected { border-color: #4caf50; background:#e8f5e9; }
+  </style>
 </head>
 <body>
 
 <header>
-  <h1>Worksheet 1 – Logical Reasoning</h1>
+  <h1>Worksheet 1 – Alphabets (a–f)</h1>
   <nav>
     <a href="home.html">Home</a>
     <a href="worksheets.html">Worksheets</a>
@@ -17,25 +32,61 @@
 </header>
 
 <main>
-  <h2>Answer the questions below</h2>
+  <h2>Tap the correct answers</h2>
 
-  <form id="ws1Form">
+  <!-- Q1 -->
+  <h3>1. Point to <strong>a</strong></h3>
+  <div class="choice-box" data-answer="false">b</div>
+  <div class="choice-box" data-answer="true">a</div>
+  <div class="choice-box" data-answer="false">d</div>
 
-    <label>1. What comes next? 2, 4, 6, 8, __</label>
-    <input type="text" required>
+  <!-- Q2 -->
+  <h3>2. Circle <strong>a</strong> and <strong>b</strong></h3>
+  <div class="choice-box" data-answer="true">a</div>
+  <div class="choice-box" data-answer="true">b</div>
+  <div class="choice-box" data-answer="false">d</div>
+  <div class="choice-box" data-answer="false">f</div>
 
-    <label>2. If all apples are fruits and some fruits are red, are some apples red?</label>
-    <input type="text" required>
+  <!-- Q3 -->
+  <h3>3. Point to <strong>c</strong></h3>
+  <div class="choice-box" data-answer="false">a</div>
+  <div class="choice-box" data-answer="false">b</div>
+  <div class="choice-box" data-answer="true">c</div>
 
-    <label>3. A triangle has 3 sides. How many sides do 2 triangles have?</label>
-    <input type="text" required>
+  <!-- Q4 -->
+  <h3>4. Circle <strong>a</strong> and <strong>c</strong></h3>
+  <div class="choice-box" data-answer="true">a</div>
+  <div class="choice-box" data-answer="true">c</div>
+  <div class="choice-box" data-answer="false">e</div>
+  <div class="choice-box" data-answer="false">g</div>
 
-    <button class="btn" type="submit">Submit Answers</button>
-  </form>
+  <button class="btn" id="submitBtn">Submit</button>
 
-  <p id="ws1Result" style="margin-top:1rem; font-size:1.1rem;"></p>
+  <p id="resultText" style="font-size:1.2rem;margin-top:1rem;"></p>
 </main>
 
 <script src="../script.js"></script>
+<script>
+  const boxes = document.querySelectorAll(".choice-box");
+  boxes.forEach(box => {
+    box.addEventListener("click", () => {
+      box.classList.toggle("selected");
+    });
+  });
+
+  document.getElementById("submitBtn").addEventListener("click", () => {
+    let score = 0;
+    boxes.forEach(b => {
+      const correct = b.dataset.answer === "true";
+      const picked = b.classList.contains("selected");
+      if (correct && picked) score++;
+    });
+    if(score >= 6){
+      addStar();
+    }
+    document.getElementById("resultText").innerText =
+      "Your score: " + score + " (Stars earned if correct!)";
+  });
+</script>
 </body>
 </html>

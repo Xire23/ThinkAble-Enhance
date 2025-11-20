@@ -1,0 +1,48 @@
+/* -----------------------------------
+            ADMIN PANEL
+------------------------------------ */
+
+.admin-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--blue);
+  margin-bottom: 1rem;
+}
+
+.admin-dashboard-card {
+  background: var(--blue-light);
+  border: 1px solid #bbdefb;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+/* CRUD Layout */
+.admin-form-box {
+  padding: 1rem;
+  border-radius: 10px;
+  background: var(--grey);
+  border: 1px solid #ccc;
+}
+
+.admin-question-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr auto;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.admin-warning {
+  background: #fff3cd;
+  color: #856404;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ffe58f;
+  margin-bottom: 1rem;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}

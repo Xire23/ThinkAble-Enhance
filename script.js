@@ -1,4 +1,3 @@
-
 // =========================
 // Helpers: generic storage
 // =========================
@@ -35,7 +34,6 @@ function initLogin() {
     const email = document.getElementById("email").value.trim().toLowerCase();
     const password = document.getElementById("password").value.trim();
 
-    // Standard passwords
     const ADMIN_EMAIL = "admin@thinkable.com";
     const ADMIN_PW = "admin123";
 
@@ -45,7 +43,6 @@ function initLogin() {
     const STUDENT_EMAIL = "student@thinkable.com";
     const STUDENT_PW = "student123";
 
-    // ---- Authentication Logic ----
     if (email === ADMIN_EMAIL && password === ADMIN_PW) {
       window.location.href = "admin/home.html";
     }
@@ -61,8 +58,77 @@ function initLogin() {
   });
 }
 
-// ============ STUDENT WORKSHEET SCORING ============
+// =========================
+// Dark Mode (global)
+// =========================
+function applySavedDarkMode() {
+  const enabled = localStorage.getItem("darkMode") === "true";
+  if (enabled) document.body.classList.add("dark");
+}
 
+function toggleDarkMode() {
+  const enabled = document.getElementById("darkModeToggle").checked;
+  if (enabled) document.body.classList.add("dark");
+  else document.body.classList.remove("dark");
+  localStorage.setItem("darkMode", enabled);
+}
+
+// =========================
+// Large Text Mode (global)
+// =========================
+function applySavedLargeText() {
+  const enabled = localStorage.getItem("largeText") === "true";
+  if (enabled) document.body.classList.add("largeText");
+}
+
+function toggleLargeText() {
+  const enabled = document.getElementById("largeTextToggle").checked;
+  if (enabled) document.body.classList.add("largeText");
+  else document.body.classList.remove("largeText");
+  localStorage.setItem("largeText", enabled);
+}
+
+// =========================
+// Parent PIN Lock
+// =========================
+function saveParentPIN() {
+  const pin = document.getElementById("parentPIN").value;
+  if (pin.length !== 4) return alert("PIN must be 4 digits!");
+  localStorage.setItem("parentPIN", pin);
+  alert("Parent PIN saved!");
+}
+
+function verifyParentPIN() {
+  const stored = localStorage.getItem("parentPIN");
+  let entered = prompt("Enter Parent PIN:");
+
+  if (entered !== stored) {
+    alert("Incorrect PIN.");
+    window.location.href = "home.html";
+  }
+}
+
+// =========================
+// Subscription System
+// =========================
+function activateSubscription() {
+  localStorage.setItem("subscriptionActive", "true");
+  alert("Subscription activated!");
+}
+
+function checkSubscriptionLimit() {
+  const subscribed = localStorage.getItem("subscriptionActive") === "true";
+  const stars = parseInt(localStorage.getItem("stars") || "0");
+
+  if (!subscribed && stars >= 3) {
+    alert("Free trial ended. Subscribe to unlock more worksheets.");
+    window.location.href = "../parent/home.html";
+  }
+}
+
+// =========================
+// Student Scoring System
+// =========================
 function addStar() {
   let stars = parseInt(localStorage.getItem("stars") || "0");
   stars++;
@@ -75,41 +141,74 @@ function loadStars() {
   if (starCount) starCount.textContent = stars;
 }
 
-// Worksheet 1
-const ws1Form = document.getElementById("ws1Form");
-if (ws1Form) {
-  ws1Form.addEventListener("submit", function(e) {
-    e.preventDefault();
-    addStar();
-    document.getElementById("ws1Result").textContent = "✔ Worksheet Completed!";
+// =========================
+// Worksheet Interactions
+// =========================
+
+// ---- WORKSHEET 1 ----
+if (window.location.pathname.includes("worksheet-1.html")) {
+  checkSubscriptionLimit();
+
+  const boxes = document.querySelectorAll(".choice-box");
+  boxes.forEach(b => {
+    b.addEventListener("click", () => b.classList.toggle("selected"));
+  });
+
+  document.getElementById("submitBtn").addEventListener("click", () => {
+    let score = 0;
+    boxes.forEach(b => {
+      if (b.dataset.answer === "true" && b.classList.contains("selected")) {
+        score++;
+      }
+    });
+
+    if (score >= 6) addStar();
+    window.location.href = "home.html";
   });
 }
 
-// Worksheet 2
-const ws2Form = document.getElementById("ws2Form");
-if (ws2Form) {
-  ws2Form.addEventListener("submit", function(e) {
-    e.preventDefault();
-    addStar();
-    document.getElementById("ws2Result").textContent = "✔ Worksheet Completed!";
+// ---- WORKSHEET 2 ----
+if (window.location.pathname.includes("worksheet-2.html")) {
+  checkSubscriptionLimit();
+
+  const boxes = document.querySelectorAll(".choice-box");
+  boxes.forEach(b => {
+    b.addEventListener("click", () => b.classList.toggle("selected"));
+  });
+
+  document.getElementById("submitBtn").addEventListener("click", () => {
+    let score = 0;
+    boxes.forEach(b => {
+      if (b.dataset.answer === "true" && b.classList.contains("selected")) {
+        score++;
+      }
+    });
+
+    if (score >= 4) addStar();
+    window.location.href = "home.html";
   });
 }
 
-// Worksheet 3
-const ws3Form = document.getElementById("ws3Form");
-if (ws3Form) {
-  ws3Form.addEventListener("submit", function(e) {
-    e.preventDefault();
-    addStar();
-    document.getElementById("ws3Result").textContent = "✔ Worksheet Completed!";
+// ---- WORKSHEET 3 ----
+if (window.location.pathname.includes("worksheet-3.html")) {
+  checkSubscriptionLimit();
+
+  const answers = { q1: "5", q2: "7", q3: "4", q4: "10", q5: "6" };
+
+  document.getElementById("submitBtn").addEventListener("click", () => {
+    let score = 0;
+    for (let key in answers) {
+      const user = document.getElementById(key).value.trim();
+      if (user === answers[key]) score++;
+    }
+
+    if (score >= 4) addStar();
+    window.location.href = "home.html";
   });
 }
-
-document.addEventListener("DOMContentLoaded", loadStars);
-
 
 // =========================
-// Admin: Worksheet CRUD (Option B)
+// Admin: Worksheet CRUD
 // =========================
 function renderQuestionRow(container, qText = "", aText = "") {
   const row = document.createElement("div");
@@ -125,12 +224,10 @@ function renderQuestionRow(container, qText = "", aText = "") {
     </div>
     <div>
       <button type="button" class="btn sm danger remove-question">Remove</button>
-    </div>
-  `;
+    </div>`;
+  
   container.appendChild(row);
-  row.querySelector(".remove-question").addEventListener("click", () => {
-    container.removeChild(row);
-  });
+  row.querySelector(".remove-question").addEventListener("click", () => row.remove());
 }
 
 function collectWorksheetForm(isEdit = false) {
@@ -141,105 +238,86 @@ function collectWorksheetForm(isEdit = false) {
   const status = document.getElementById("ws_status").value;
 
   if (!title || !subject || !grade) {
-    alert("Title, Subject and Grade are required.");
+    alert("Missing required fields.");
     return null;
   }
 
-  const qTexts = Array.from(document.querySelectorAll(".question-text"));
-  const aTexts = Array.from(document.querySelectorAll(".question-answer"));
+  const qTexts = [...document.querySelectorAll(".question-text")];
+  const aTexts = [...document.querySelectorAll(".question-answer")];
 
-  if (qTexts.length === 0) {
-    alert("Please add at least one question.");
-    return null;
-  }
-
-  const questions = [];
-  const answerKey = [];
-  qTexts.forEach((el, idx) => {
-    const q = el.value.trim();
-    const a = aTexts[idx].value.trim();
-    if (q) {
-      questions.push(q);
-      answerKey.push(a || "");
-    }
-  });
-
-  if (questions.length === 0) {
-    alert("Please ensure questions are not empty.");
-    return null;
-  }
+  const questions = qTexts.map(el => el.value.trim());
+  const answerKey = aTexts.map(el => el.value.trim());
 
   const now = new Date().toISOString();
-  const base = {
-    title,
-    subject,
-    gradeLevel: grade,
-    description,
-    questions,
-    answerKey,
-    status, // draft / published
-    updatedAt: now
+
+  const result = {
+    title, subject, gradeLevel: grade, description,
+    questions, answerKey, status, updatedAt: now
   };
+
   if (!isEdit) {
-    base.id = Date.now();
-    base.createdAt = now;
+    result.id = Date.now();
+    result.createdAt = now;
   }
-  return base;
+
+  return result;
 }
 
-// Create
+// ---- Create ----
 function initWorksheetCreate() {
   const form = document.getElementById("worksheetCreateForm");
   if (!form) return;
 
-  const qContainer = document.getElementById("questionsContainer");
-  const addBtn = document.getElementById("addQuestionBtn");
-  addBtn.addEventListener("click", () => renderQuestionRow(qContainer));
-  // Start with one blank row
-  renderQuestionRow(qContainer);
+  const container = document.getElementById("questionsContainer");
+  document.getElementById("addQuestionBtn")
+    .addEventListener("click", () => renderQuestionRow(container));
 
-  form.addEventListener("submit", function (e) {
+  renderQuestionRow(container);
+
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const worksheet = collectWorksheetForm(false);
-    if (!worksheet) return;
+    const data = collectWorksheetForm(false);
+    if (!data) return;
 
     const worksheets = loadWorksheets();
-    worksheets.push(worksheet);
+    worksheets.push(data);
     saveWorksheets(worksheets);
-    alert("Worksheet created successfully!");
+
+    alert("Worksheet created!");
     window.location.href = "worksheet-read.html";
   });
 }
 
-// List / Read
+// ---- List ----
 function initWorksheetList() {
   const tableBody = document.getElementById("worksheetTable");
   if (!tableBody) return;
 
   const worksheets = loadWorksheets();
-  if (worksheets.length === 0) {
-    tableBody.innerHTML = `<tr><td colspan="6">No worksheets yet. Go to "Create Worksheet" to add one.</td></tr>`;
+  if (!worksheets.length) {
+    tableBody.innerHTML = `<tr><td colspan="6">No worksheets yet.</td></tr>`;
     return;
   }
 
-  tableBody.innerHTML = worksheets.map(ws => `
-    <tr>
-      <td>${ws.title}</td>
-      <td>${ws.subject}</td>
-      <td>${ws.gradeLevel}</td>
-      <td><span class="pill">${ws.status || "draft"}</span></td>
-      <td>${(ws.questions || []).length}</td>
-      <td>
-        <button class="btn sm" onclick="openWorksheetEdit(${ws.id})">Edit</button>
-        <button class="btn sm danger" onclick="deleteWorksheet(${ws.id})">Delete</button>
-      </td>
-    </tr>
-  `).join("");
+  tableBody.innerHTML =
+    worksheets.map(ws => `
+      <tr>
+        <td>${ws.title}</td>
+        <td>${ws.subject}</td>
+        <td>${ws.gradeLevel}</td>
+        <td><span class="pill">${ws.status}</span></td>
+        <td>${ws.questions.length}</td>
+        <td>
+          <button class="btn sm" onclick="openWorksheetEdit(${ws.id})">Edit</button>
+          <button class="btn sm danger" onclick="deleteWorksheet(${ws.id})">Delete</button>
+        </td>
+      </tr>
+    `).join("");
 }
 
-// Update
+// ---- Edit ----
 function openWorksheetEdit(id) {
-  localStorage.setItem("editWorksheetId", String(id));
+  localStorage.setItem("editWorksheetId", id);
   window.location.href = "worksheet-update.html";
 }
 
@@ -247,15 +325,10 @@ function initWorksheetUpdate() {
   const form = document.getElementById("worksheetUpdateForm");
   if (!form) return;
 
-  const editId = localStorage.getItem("editWorksheetId");
-  if (!editId) {
-    alert("No worksheet selected.");
-    window.location.href = "worksheet-read.html";
-    return;
-  }
-
+  const id = localStorage.getItem("editWorksheetId");
   const worksheets = loadWorksheets();
-  const ws = worksheets.find(w => String(w.id) === String(editId));
+  const ws = worksheets.find(w => w.id == id);
+
   if (!ws) {
     alert("Worksheet not found.");
     window.location.href = "worksheet-read.html";
@@ -265,66 +338,47 @@ function initWorksheetUpdate() {
   document.getElementById("ws_title").value = ws.title;
   document.getElementById("ws_subject").value = ws.subject;
   document.getElementById("ws_grade").value = ws.gradeLevel;
-  document.getElementById("ws_description").value = ws.description || "";
-  document.getElementById("ws_status").value = ws.status || "draft";
+  document.getElementById("ws_description").value = ws.description;
+  document.getElementById("ws_status").value = ws.status;
 
-  const qContainer = document.getElementById("questionsContainer");
-  const addBtn = document.getElementById("addQuestionBtn");
-  addBtn.addEventListener("click", () => renderQuestionRow(qContainer));
+  const container = document.getElementById("questionsContainer");
+  document.getElementById("addQuestionBtn")
+    .addEventListener("click", () => renderQuestionRow(container));
 
-  (ws.questions || []).forEach((q, idx) => {
-    const ans = (ws.answerKey || [])[idx] || "";
-    renderQuestionRow(qContainer, q, ans);
+  ws.questions.forEach((q, i) => {
+    renderQuestionRow(container, q, ws.answerKey[i]);
   });
 
-  form.addEventListener("submit", function (e) {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
     const updated = collectWorksheetForm(true);
-    if (!updated) return;
-
-    ws.title = updated.title;
-    ws.subject = updated.subject;
-    ws.gradeLevel = updated.gradeLevel;
-    ws.description = updated.description;
-    ws.questions = updated.questions;
-    ws.answerKey = updated.answerKey;
-    ws.status = updated.status;
-    ws.updatedAt = updated.updatedAt;
-
+    Object.assign(ws, updated);
     saveWorksheets(worksheets);
+
     alert("Worksheet updated.");
     window.location.href = "worksheet-read.html";
   });
 }
 
-// Delete
+// ---- Delete ----
 function deleteWorksheet(id) {
   if (!confirm("Delete this worksheet?")) return;
   let worksheets = loadWorksheets();
   worksheets = worksheets.filter(w => w.id !== id);
   saveWorksheets(worksheets);
-  alert("Worksheet deleted.");
-  if (document.getElementById("worksheetTable")) {
-    initWorksheetList();
-  } else {
-    window.location.href = "worksheet-read.html";
-  }
+  alert("Deleted.");
+  window.location.reload();
 }
 
-// Dummy initialisers for other pages if needed in future
-function initAdminHome() {}
-function initParentHome() {}
-function initStudentHome() {}
-
 // =========================
-// Bootstrap
+// Page Auto Init
 // =========================
 document.addEventListener("DOMContentLoaded", function () {
   initLogin();
   initWorksheetCreate();
   initWorksheetList();
   initWorksheetUpdate();
-  initAdminHome();
-  initParentHome();
-  initStudentHome();
+  loadStars();
+  applySavedDarkMode();
+  applySavedLargeText();
 });
