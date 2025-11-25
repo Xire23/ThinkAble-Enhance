@@ -1,0 +1,75 @@
+/* Center card on page */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+/* Mint rounded card */
+.login-card {
+  background: var(--mint);
+  padding: 2rem 2.5rem;
+  border-radius: 25px;
+  width: 360px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+/* Logo */
+.login-logo {
+  width: 210px;
+  margin-bottom: 1rem;
+}
+
+/* Form grid layout */
+.login-form {
+  display: grid;
+  gap: 1rem;
+  text-align: left;
+}
+
+/* Labels */
+.login-form label {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Purple input fields */
+.login-form input {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 15px;
+  border: none;
+  background: var(--purple);
+  color: white;
+  font-size: 1rem;
+}
+
+/* Pink login button */
+.login-btn {
+  background: var(--pink);
+  border: none;
+  padding: 0.8rem;
+  font-size: 1.15rem;
+  border-radius: 18px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  transition: 0.2s;
+}
+
+.login-btn:hover {
+  opacity: 0.85;
+}
+
+/* Hint text */
+.login-hint {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+

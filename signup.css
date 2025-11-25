@@ -1,0 +1,69 @@
+/* Center page vertically */
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* Mint Card */
+.signup-card {
+  background: var(--mint);
+  padding: 2rem 2.5rem;
+  border-radius: 25px;
+  width: 360px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+/* Logo */
+.signup-logo {
+  width: 210px;
+  margin-bottom: 1rem;
+}
+
+/* Form layout */
+.signup-form {
+  display: grid;
+  gap: 1rem;
+  text-align: left;
+}
+
+/* Labels */
+.signup-form label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Purple input fields */
+.signup-form input,
+.signup-form select {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 15px;
+  border: none;
+  background: var(--purple);
+  color: white;
+  font-size: 1rem;
+}
+
+/* Pink Sign Up Button */
+.signup-btn {
+  background: var(--pink);
+  border: none;
+  padding: 0.8rem;
+  font-size: 1.15rem;
+  border-radius: 18px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  transition: 0.2s;
+}
+
+.signup-btn:hover {
+  opacity: 0.85;
+}
+

@@ -1,12 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>ThinkAble | Sign Up</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="signup.css">
 </head>
 <body>
+
   <header>
     <h1>ThinkAble Sign Up</h1>
     <nav>
@@ -14,28 +15,40 @@
       <a href="login.html">Login</a>
     </nav>
   </header>
-  <main>
-    <h2>Create an Account</h2>
-    <form>
-      <div>
+
+  <main class="signup-wrapper">
+    <div class="signup-card">
+
+      <img src="Logo.png" alt="ThinkAble Logo" class="signup-logo">
+
+      <h2>Create an Account</h2>
+
+      <form id="signupForm" class="signup-form">
         <label for="su_email">Email</label>
         <input id="su_email" type="email" required>
-      </div>
-      <div>
+
         <label for="su_password">Password</label>
         <input id="su_password" type="password" required>
-      </div>
-      <div>
+
         <label for="su_role">Role</label>
         <select id="su_role">
           <option value="student">Student</option>
           <option value="parent">Parent</option>
           <option value="admin">Admin</option>
         </select>
-      </div>
-      <button class="btn" type="submit">Sign Up (Mock)</button>
-    </form>
-    <p style="margin-top:1rem;font-size:0.9rem;">This is a mock page for your prototype – integrate real auth later.</p>
+
+        <button class="signup-btn" type="submit">Sign Up</button>
+      </form>
+
+    </div>
   </main>
+
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      window.location.href = "login.html";
+    });
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>

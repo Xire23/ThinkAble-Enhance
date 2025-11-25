@@ -1,10 +1,16 @@
+/* ==========================================================
+                THINKABLE MOODBOARD COLOR SYSTEM
+========================================================== */
 :root {
-  --blue: #4a90e2;
-  --blue-light: #e3f2fd;
-  --green: #4caf50;
-  --green-light: #e8f5e9;
-  --grey: #f5f5f5;
-  --text-dark: #263238;
+  --purple: #7E68B0;
+  --mint: #89D7CA;
+  --pink: #D881A2;
+  --peach: #f7b054;
+  --dark_purple: #5e4a87;
+
+  --light-bg: #F7F7F7;
+  --light-card: #FFFFFF;
+  --text-dark: #2A2A2A;
 
   /* Dark mode */
   --dark-bg: #1e1e1e;
@@ -15,121 +21,227 @@
 
 * {
   box-sizing: border-box;
+  font-family: "Poppins", system-ui, sans-serif;
 }
 
-/* -------------------------
-        BODY
--------------------------- */
+/* ==========================================================
+                        BODY
+========================================================== */
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: var(--grey);
+  background: var(--light-bg);
   color: var(--text-dark);
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* -------------------------
-        HEADER
--------------------------- */
+/* ==========================================================
+                        HEADER
+========================================================== */
 header {
-  background: linear-gradient(90deg, var(--blue), var(--green));
+  background: var(--dark-bg);
   color: white;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 12px solid var(--purple);
 }
+
+/* logo + title wrapper */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  height: 100px;
+  width: auto;
+  border-radius: 8px;
+}
+
 header h1 {
   margin: 0;
   font-size: 1.4rem;
 }
+
+/* navigation buttons */
 nav a {
   color: white;
   text-decoration: none;
   margin-left: 1rem;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  background: var(--mint);
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: 0.2s;
 }
-nav a:hover { text-decoration: underline; }
 
-/* -------------------------
-        MAIN
--------------------------- */
+nav a:hover {
+  opacity: 0.8;
+}
+
+/* ==========================================================
+                        MAIN
+========================================================== */
 main {
   max-width: 1000px;
   margin: 2rem auto;
   padding: 1.5rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  background: var(--light-card);
+  border-radius: 18px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
 }
-h2 { color: var(--blue); }
 
-/* -------------------------
-        BUTTONS
--------------------------- */
+h2 {
+  color: var(--purple);
+}
+
+/* ==========================================================
+                        BUTTONS
+========================================================== */
 .btn {
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  border-radius: 30px;
   border: none;
   cursor: pointer;
   font-size: 0.95rem;
-  background: var(--blue);
-  color: white;
+  background: var(--mint);
+  color: black;
+  font-weight: 600;
 }
-.btn.secondary { background: var(--green); }
-.btn.sm { padding: 0.25rem 0.75rem; font-size: 0.8rem; }
-.btn.danger { background: #e53935; }
 
-/* -------------------------
-        CARDS
--------------------------- */
+.btn.secondary {
+  background: var(--mint);
+  color: var(--text-dark);
+}
+
+.btn.danger {
+  background: #e25555;
+}
+
+.btn.sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+/* ==========================================================
+                        CARDS
+========================================================== */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
 }
+
 .card {
-  padding: 1rem;
+  padding: 1.2rem;
+  border-radius: 15px;
+  background: var(--purple);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  position: relative;
+}
+
+/* Progress bar inside cards */
+.card .progress-bar {
+  background: rgba(255, 255, 255, 0.3);
+  height: 16px;
   border-radius: 10px;
-  background: var(--blue-light);
-  border: 1px solid #bbdefb;
+  overflow: hidden;
+  margin-top: 1rem;
 }
 
-/* -------------------------
-        FORMS
--------------------------- */
-form { display: grid; gap: 0.75rem; max-width: 700px; }
-label { font-weight: 600; }
-input, select, textarea {
-  width: 100%;
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #cfd8dc;
-}
-
-/* -------------------------
-        TABLES
--------------------------- */
-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
-th, td {
-  border: 1px solid #e0e0e0;
-  padding: 0.5rem 0.6rem;
-}
-th { background: var(--blue-light); }
-tbody tr:nth-child(even) { background: #fafafa; }
-
-/* -------------------------
-        SMALL ELEMENTS
--------------------------- */
-.pill {
-  padding: 0.1rem 0.6rem;
-  border-radius: 999px;
-  background: var(--green-light);
-  font-size: 0.75rem;
+.card .progress-bar-fill {
+  background: var(--mint);
+  height: 100%;
+  width: 50%;
 }
 
 /* ==========================================================
-                    DARK MODE (GLOBAL)
+                        FORMS
+========================================================== */
+form {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 700px;
+}
+
+label {
+  font-weight: 600;
+  color: var(--purple);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 2px solid var(--mint);
+  background: white;
+  font-size: 1rem;
+  color: var(--text-dark);
+  transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--purple);
+  outline: none;
+}
+
+/* ==========================================================
+                        TABLES
+========================================================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  border: 1px solid #e0e0e0;
+  padding: 0.6rem;
+}
+
+th {
+  background: var(--mint);
+  color: var(--text-dark);
+}
+
+tbody tr:nth-child(even) {
+  background: #fdfdfd;
+}
+
+/* ==========================================================
+                        SMALL ELEMENTS
+========================================================== */
+.pill {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--peach);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* ==========================================================
+                        WORKSHEET CONTENT
+========================================================== */
+.ws-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+/* ==========================================================
+                        DARK MODE
 ========================================================== */
 body.dark {
   background: var(--dark-bg);
@@ -138,24 +250,22 @@ body.dark {
 
 body.dark main {
   background: var(--dark-card);
-  color: var(--dark-text);
 }
 
 body.dark header {
-  background: #111 !important;
+  background: #3a2c52;
 }
 
 body.dark .card {
-  background: #333;
-  border-color: var(--dark-border);
+  background: #3c3c3c;
 }
 
 body.dark input,
-body.dark textarea,
-body.dark select {
+body.dark select,
+body.dark textarea {
   background: #2b2b2b;
-  color: #fff;
   border-color: var(--dark-border);
+  color: white;
 }
 
 body.dark table th {
@@ -167,16 +277,131 @@ body.dark table td {
 }
 
 /* ==========================================================
-                LARGE TEXT MODE (GLOBAL)
+                        LARGE TEXT MODE
 ========================================================== */
-body.largeText { font-size: 1.3rem; }
-body.largeText h1 { font-size: 2rem; }
-body.largeText h2 { font-size: 1.7rem; }
-body.largeText * { font-size: 1.3rem !important; }
+body.largeText {
+  font-size: 1.3rem;
+}
 
-.ws-content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+body.largeText h1 {
+  font-size: 2rem;
+}
+
+body.largeText h2 {
+  font-size: 1.7rem;
+}
+
+body.largeText * {
+  font-size: 1.3rem !important;
+}
+
+/* --------------------------
+   PROGRESS PAGE IMPROVEMENTS
+--------------------------- */
+
+.progress-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+}
+
+.progress-container h2 {
+  font-size: 1.9rem;
+  margin-bottom: 0.2rem;
+}
+
+.subtitle {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.progress-card {
+  background: var(--light-card);
+  padding: 1.5rem;
+  border-radius: 18px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+  overflow-x: auto;
+}
+
+/* --------------------------
+      TABLE STYLING
+--------------------------- */
+.progress-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.progress-table thead th {
+  background: var(--purple);
+  color: white;
+  padding: 0.9rem;
+  text-align: left;
+  font-weight: 600;
+  border: none;
+}
+
+.progress-table td {
+  padding: 0.9rem;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.progress-table tbody tr:nth-child(even) {
+  background: rgba(137, 215, 202, 0.15); /* mint tint */
+}
+
+.progress-table tbody tr:nth-child(odd) {
+  background: white;
+}
+
+/* --------------------------
+      STATUS PILL
+--------------------------- */
+.status-complete {
+  background: var(--peach);
+  color: var(--text-dark);
+  padding: 0.35rem 0.8rem;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.footnote {
   margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* --------------------------
+         DARK MODE
+--------------------------- */
+body.dark .progress-card {
+  background: var(--dark-card);
+}
+
+body.dark .progress-table thead th {
+  background: var(--purple);
+}
+
+body.dark .progress-table tbody tr:nth-child(even) {
+  background: #2b2b2b;
+}
+
+body.dark .progress-table tbody tr:nth-child(odd) {
+  background: #222;
+}
+
+body.dark .progress-table td {
+  border-color: #444;
+}
+
+body.dark .subtitle,
+body.dark .footnote {
+  color: #ccc;
+}
+
+body.dark .status-complete {
+  background: #c49f5a;
+  color: #fff;
 }

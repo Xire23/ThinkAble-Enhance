@@ -1,12 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>ThinkAble | Login</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="login.css">
 </head>
 <body>
+
   <header>
     <h1>ThinkAble Login</h1>
     <nav>
@@ -14,23 +15,32 @@
       <a href="signup.html">Sign Up</a>
     </nav>
   </header>
-  <main>
-    <h2>Login</h2>
-    <form id="loginForm">
-      <div>
+
+  <main class="login-wrapper">
+
+    <div class="login-card">
+      <img src="Logo.png" alt="ThinkAble Logo" class="login-logo">
+
+      <h2>Welcome Back</h2>
+
+      <form id="loginForm" class="login-form">
         <label for="email">Email</label>
         <input type="email" id="email" required>
-      </div>
-      <div>
+
         <label for="password">Password</label>
         <input type="password" id="password" required>
-      </div>
-      <button class="btn" type="submit">Login</button>
-    </form>
-    <p style="margin-top:1rem;font-size:0.9rem;">
-      Hint for testing roles: use an email containing <strong>admin</strong>, <strong>parent</strong> or anything else (student).
-    </p>
+
+        <button class="login-btn" type="submit">Login</button>
+      </form>
+
+      <p class="login-hint">
+        Hint for testing roles: use an email containing
+        <strong>admin</strong>, <strong>parent</strong>, or anything else for <strong>student</strong>.
+      </p>
+    </div>
+
   </main>
+
   <script src="script.js"></script>
 </body>
 </html>
