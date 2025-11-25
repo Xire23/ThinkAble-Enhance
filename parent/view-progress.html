@@ -9,7 +9,10 @@
 <body>
 
 <header>
-  <h1>Progress Overview</h1>
+  <div class="header-left">
+    <img src="../Logo.png" alt="ThinkAble Logo" class="logo">
+    <h1>Parent – View Progress</h1>
+    </div>
   <nav>
     <a href="home.html">Home</a>
     <a href="scoreboard.html">Scoreboard</a>
@@ -18,43 +21,48 @@
   </nav>
 </header>
 
-<main>
+<main class="progress-container">
+
   <h2>Your Child's Learning Progress</h2>
+  <p class="subtitle">Overview of your child’s worksheet performance.</p>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Worksheet</th>
-        <th>Status</th>
-        <th>Score</th>
-        <th>Completed On</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Worksheet 1 – Logical Reasoning</td>
-        <td><span class="pill">Completed</span></td>
-        <td>3/3</td>
-        <td>2025-03-15</td>
-      </tr>
-      <tr>
-        <td>Worksheet 2 – Picture Analysis</td>
-        <td><span class="pill">Completed</span></td>
-        <td>3/3</td>
-        <td>2025-03-21</td>
-      </tr>
-      <tr>
-        <td>Worksheet 3 – Story Problem Solving</td>
-        <td><span class="pill">Completed</span></td>
-        <td>3/3</td>
-        <td>2025-03-28</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="progress-card">
+    <table class="progress-table">
+      <thead>
+        <tr>
+          <th>Worksheet</th>
+          <th>Status</th>
+          <th>Score</th>
+          <th>Completed On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Worksheet 1 – Logical Reasoning</td>
+          <td><span class="pill status-complete">Completed</span></td>
+          <td>3/3</td>
+          <td>2025-03-15</td>
+        </tr>
+        <tr>
+          <td>Worksheet 2 – Picture Analysis</td>
+          <td><span class="pill status-complete">Completed</span></td>
+          <td>3/3</td>
+          <td>2025-03-21</td>
+        </tr>
+        <tr>
+          <td>Worksheet 3 – Story Problem Solving</td>
+          <td><span class="pill status-complete">Completed</span></td>
+          <td>3/3</td>
+          <td>2025-03-28</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <p style="margin-top:1rem; font-size:0.9rem;">* Data is static for prototype.</p>
+  <p class="footnote">* Data is static for prototype.</p>
 
 </main>
+
 
 <script src="../script.js"></script>
 </body>
