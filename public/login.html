@@ -1,0 +1,83 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ThinkAble | Login</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <img src="../Logo.png" alt="ThinkAble Logo" class="logo">
+      <h1>ThinkAble Login</h1>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="signup.html">Sign Up</a>
+    </nav>
+  </header>
+
+  <main class="login-wrapper">
+
+    <div class="login-card">
+      <img src="Logo.png" alt="ThinkAble Logo" class="login-logo">
+
+      <h2>Welcome Back</h2>
+
+      <form id="loginForm" class="login-form">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <button class="login-btn" type="submit">Login</button>
+      </form>
+
+      <p class="login-hint">
+        Hint for testing roles: use an email containing
+        <strong>admin</strong>, <strong>parent</strong>, or anything else for <strong>student</strong>.
+      </p>
+
+      <p id="loginMessage" style="color:red;"></p>
+    </div>
+
+  </main>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const loginMessage = document.getElementById("loginMessage");
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      try {
+        const res = await fetch("/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          // Redirect to the page provided by the server
+          window.location.href = data.redirect;
+        } else {
+          loginMessage.textContent = data.error;
+        }
+
+      } catch (err) {
+        loginMessage.textContent = "Server error. Try again later.";
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ThinkAble | Sign Up</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <img src="../Logo.png" alt="ThinkAble Logo" class="logo">
+      <h1>ThinkAble Sign Up</h1>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <main class="signup-wrapper">
+    <div class="signup-card">
+
+      <img src="Logo.png" alt="ThinkAble Logo" class="signup-logo">
+
+      <h2>Create an Account</h2>
+
+      <form id="signupForm" class="signup-form">
+        <label for="su_email">Email</label>
+        <input id="su_email" name="email" type="email" required>
+
+        <label for="su_password">Password</label>
+        <input id="su_password" name="password" type="password" required>
+
+        <button class="signup-btn" type="submit">Sign Up</button>
+      </form>
+
+      <p class="login-hint">
+        Hint for testing roles: use an email containing
+        <strong>admin</strong>, <strong>parent</strong>, or anything else for <strong>student</strong>.
+      </p>
+
+      <p id="signupMessage" style="color:red;"></p>
+
+    </div>
+  </main>
+
+  <script>
+    const signupForm = document.getElementById("signupForm");
+    const signupMessage = document.getElementById("signupMessage");
+
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("su_email").value.trim();
+      const password = document.getElementById("su_password").value.trim();
+
+      try {
+        const res = await fetch("/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          // Signup success, redirect to login page
+          window.location.href = "login.html";
+        } else {
+          signupMessage.textContent = data.error;
+        }
+
+      } catch (err) {
+        signupMessage.textContent = "Server error. Try again later.";
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>
