@@ -5,6 +5,47 @@
   <title>Worksheet 3 – Colours: Blue</title>
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="student.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f7f7f7;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .logo { height: 50px; }
+    nav a { margin: 0 10px; text-decoration: none; font-size: 1.2rem; }
+    .choices { display: flex; flex-direction: column; gap: 15px; margin-top: 10px; }
+    .choice-box {
+      padding: 20px;
+      font-size: 1.5rem;
+      text-align: center;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background-color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s;
+      user-select: none;
+    }
+    .choice-box.correct { background-color: #a0e6a0; border-color: #4CAF50; }
+    .choice-box.wrong { background-color: #f7a0a0; border-color: #f44336; }
+    .choice-box.selected { border-color: #007BFF; }
+    #submitBtn, #doneBtn {
+      padding: 15px 25px;
+      font-size: 1.3rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #submitBtn { background-color: #007BFF; color: #fff; }
+    #doneBtn { background-color: #6c757d; color: #fff; }
+    #resultText { font-size: 1.4rem; margin-top: 10px; font-weight: bold; }
+  </style>
 </head>
 
 <body>
@@ -13,7 +54,7 @@
   <div class="header-left">
     <img src="../Logo.png" alt="ThinkAble Logo" class="logo">
     <h1>Student – Worksheet 3</h1>
-    </div>
+  </div>
   <nav>
     <a href="home.html">Home</a>
     <a href="worksheets.html">Worksheets</a>
@@ -21,7 +62,6 @@
   </nav>
 </header>
 
-<!-- Passing score is 2 -->
 <main data-pass="2">
   <h2>Tap the correct answers</h2>
 
@@ -31,9 +71,9 @@
     <div class="question">
       <h3>1. Point to <strong>blue</strong></h3>
       <div class="choices">
-        <div class="choice-box" data-answer="true">🔵 Blue</div>
-        <div class="choice-box" data-answer="false">🟢 Green</div>
-        <div class="choice-box" data-answer="false">🔴 Red</div>
+        <div class="choice-box" data-correct="true">🔵 Blue</div>
+        <div class="choice-box" data-correct="false">🟢 Green</div>
+        <div class="choice-box" data-correct="false">🔴 Red</div>
       </div>
     </div>
 
@@ -41,9 +81,9 @@
     <div class="question">
       <h3>2. Circle <strong>blue colour</strong></h3>
       <div class="choices">
-        <div class="choice-box" data-answer="true">🔵 Blue</div>
-        <div class="choice-box" data-answer="false">🟡 Yellow</div>
-        <div class="choice-box" data-answer="false">🟣 Purple</div>
+        <div class="choice-box" data-correct="true">🔵 Blue</div>
+        <div class="choice-box" data-correct="false">🟡 Yellow</div>
+        <div class="choice-box" data-correct="false">🟣 Purple</div>
       </div>
     </div>
 
@@ -51,25 +91,101 @@
     <div class="question">
       <h3>3. Tap the correct <strong>blue</strong> item</h3>
       <div class="choices">
-        <div class="choice-box" data-answer="false">🟡 Banana</div>
-        <div class="choice-box" data-answer="false">🟤 Chair</div>
-        <div class="choice-box" data-answer="true">🔵 Ball</div>
+        <div class="choice-box" data-correct="false">🟡 Banana</div>
+        <div class="choice-box" data-correct="false">🟤 Chair</div>
+        <div class="choice-box" data-correct="true">🔵 Ball</div>
       </div>
     </div>
 
   </div>
 
   <button class="btn" id="submitBtn">Submit</button>
-  <p id="resultText" style="font-size:1.2rem;margin-top:1rem;"></p>
-
-  <button class="btn secondary" id="doneBtn" style="display:none;margin-top:1rem;">
-    Done
-  </button>
+  <p id="resultText"></p>
+  <button class="btn secondary" id="doneBtn" style="display:none;">Done</button>
 
 </main>
 
-<!-- Universal worksheet engine -->
-<script src="../script.js"></script>
+<script>
+  const questions = document.querySelectorAll('.question');
+  let currentQuestion = 0;
+  let selectedChoices = [];
+
+  const submitBtn = document.getElementById('submitBtn');
+  const doneBtn = document.getElementById('doneBtn');
+  const resultText = document.getElementById('resultText');
+
+  function showQuestion(index) {
+    questions.forEach((q, i) => q.style.display = i === index ? 'block' : 'none');
+    selectedChoices = [];
+    resultText.textContent = '';
+    submitBtn.style.display = 'inline-block';
+    doneBtn.style.display = 'none';
+
+    const boxes = questions[index].querySelectorAll('.choice-box');
+    boxes.forEach(box => {
+      box.classList.remove('selected', 'correct', 'wrong');
+      box.addEventListener('click', () => {
+        const i = Array.from(boxes).indexOf(box);
+        if (selectedChoices.includes(i)) {
+          selectedChoices = selectedChoices.filter(x => x !== i);
+          box.classList.remove('selected');
+        } else {
+          selectedChoices.push(i);
+          box.classList.add('selected');
+        }
+      });
+    });
+  }
+
+  function checkAnswer() {
+    const boxes = questions[currentQuestion].querySelectorAll('.choice-box');
+    let allCorrect = true;
+
+    boxes.forEach((box, i) => {
+      const isCorrect = box.dataset.correct === "true";
+      const isSelected = selectedChoices.includes(i);
+
+      box.classList.remove('correct', 'wrong');
+
+      if (isCorrect && isSelected) {
+        box.classList.add('correct');
+      } else if (!isCorrect && isSelected) {
+        box.classList.add('wrong');
+        allCorrect = false;
+      } else if (isCorrect && !isSelected) {
+        allCorrect = false;
+      }
+    });
+
+    if (allCorrect) {
+      resultText.textContent = 'Good Job!';
+      resultText.style.color = '#4CAF50';
+      submitBtn.style.display = 'none';
+      doneBtn.style.display = 'inline-block';
+    } else {
+      resultText.textContent = 'Oops! Wrong Answer';
+      resultText.style.color = '#f44336';
+      // Keep submit visible so student can try again
+    }
+  }
+
+  submitBtn.addEventListener('click', checkAnswer);
+
+  doneBtn.addEventListener('click', () => {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      showQuestion(currentQuestion);
+    } else {
+      document.querySelector('.ws-content').innerHTML = '<h2>You have completed the worksheet!</h2>';
+      doneBtn.style.display = 'none';
+      resultText.textContent = '';
+      submitBtn.style.display = 'none';
+    }
+  });
+
+  // Show the first question
+  showQuestion(currentQuestion);
+</script>
 
 </body>
 </html>

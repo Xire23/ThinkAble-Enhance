@@ -5,6 +5,47 @@
   <title>Worksheet 1 – Alphabets a–f</title>
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="./student.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f7f7f7;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .logo { height: 50px; }
+    nav a { margin: 0 10px; text-decoration: none; font-size: 1.2rem; }
+    .choices { display: flex; flex-direction: column; gap: 15px; margin-top: 10px; }
+    .choice-box {
+      padding: 20px;
+      font-size: 1.5rem;
+      text-align: center;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background-color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s;
+      user-select: none;
+    }
+    .choice-box.correct { background-color: #a0e6a0; border-color: #4CAF50; }
+    .choice-box.wrong { background-color: #f7a0a0; border-color: #f44336; }
+    .choice-box.selected { border-color: #007BFF; }
+    #submitBtn, #doneBtn {
+      padding: 15px 25px;
+      font-size: 1.3rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #submitBtn { background-color: #007BFF; color: #fff; }
+    #doneBtn { background-color: #6c757d; color: #fff; }
+    #resultText { font-size: 1.4rem; margin-top: 10px; font-weight: bold; }
+  </style>
 </head>
 
 <body>
@@ -12,8 +53,8 @@
 <header>
   <div class="header-left">
     <img src="../Logo.png" alt="ThinkAble Logo" class="logo">
-    <h1>Student – Worksheet 1</h1>
-    </div>
+    <h1>Student - Worksheet 1</h1>
+  </div>
   <nav>
     <a href="home.html">Home</a>
     <a href="worksheets.html">Worksheets</a>
@@ -21,67 +62,143 @@
   </nav>
 </header>
 
-<!-- IMPORTANT: data-pass="6" tells the universal engine the passing score -->
 <main data-pass="6">
-  <h2>Tap the correct answers</h2>
-
-  <div class="ws-content">
-
-    <!-- Q1 -->
-    <div class="question">
-      <h3>1. Point to <strong>a</strong></h3>
-      <div class="choices">
-        <div class="choice-box" data-answer="false">b</div>
-        <div class="choice-box" data-answer="true">a</div>
-        <div class="choice-box" data-answer="false">d</div>
-      </div>
-    </div>
-
-    <!-- Q2 -->
-    <div class="question">
-      <h3>2. Circle <strong>a</strong> and <strong>b</strong></h3>
-      <div class="choices">
-        <div class="choice-box" data-answer="true">a</div>
-        <div class="choice-box" data-answer="true">b</div>
-        <div class="choice-box" data-answer="false">d</div>
-        <div class="choice-box" data-answer="false">f</div>
-      </div>
-    </div>
-
-    <!-- Q3 -->
-    <div class="question">
-      <h3>3. Point to <strong>c</strong></h3>
-      <div class="choices">
-        <div class="choice-box" data-answer="false">a</div>
-        <div class="choice-box" data-answer="false">b</div>
-        <div class="choice-box" data-answer="true">c</div>
-      </div>
-    </div>
-
-    <!-- Q4 -->
-    <div class="question">
-      <h3>4. Circle <strong>a</strong> and <strong>c</strong></h3>
-      <div class="choices">
-        <div class="choice-box" data-answer="true">a</div>
-        <div class="choice-box" data-answer="true">c</div>
-        <div class="choice-box" data-answer="false">e</div>
-        <div class="choice-box" data-answer="false">g</div>
-      </div>
-    </div>
-
-  </div>
+  <div id="questionContainer"></div>
 
   <button class="btn" id="submitBtn">Submit</button>
-  <p id="resultText" style="font-size:1.2rem;margin-top:1rem;"></p>
-
-  <button class="btn secondary" id="doneBtn" style="display:none;margin-top:1rem;">
-    Done
-  </button>
-
+  <p id="resultText"></p>
+  <button class="btn secondary" id="doneBtn" style="display:none;">Done</button>
 </main>
 
-<!-- Universal script only -->
-<script src="../script.js"></script>
+<script>
+const questions = [
+  {
+    text: '1. Point to a',
+    choices: [
+      {text: 'b', correct: false},
+      {text: 'a', correct: true},
+      {text: 'd', correct: false},
+    ]
+  },
+  {
+    text: '2. Circle a and b',
+    choices: [
+      {text: 'a', correct: true},
+      {text: 'b', correct: true},
+      {text: 'd', correct: false},
+      {text: 'f', correct: false},
+    ]
+  },
+  {
+    text: '3. Point to c',
+    choices: [
+      {text: 'a', correct: false},
+      {text: 'b', correct: false},
+      {text: 'c', correct: true},
+    ]
+  },
+  {
+    text: '4. Circle a and c',
+    choices: [
+      {text: 'a', correct: true},
+      {text: 'c', correct: true},
+      {text: 'e', correct: false},
+      {text: 'g', correct: false},
+    ]
+  }
+];
+
+let currentQuestion = 0;
+let selectedChoices = [];
+
+const questionContainer = document.getElementById('questionContainer');
+const submitBtn = document.getElementById('submitBtn');
+const doneBtn = document.getElementById('doneBtn');
+const resultText = document.getElementById('resultText');
+
+function showQuestion(index) {
+  const q = questions[index];
+  questionContainer.innerHTML = `
+    <div class="question">
+      <h3>${q.text}</h3>
+      <div class="choices">
+        ${q.choices.map((c,i) => `<div class="choice-box" data-index="${i}">${c.text}</div>`).join('')}
+      </div>
+    </div>
+  `;
+
+  selectedChoices = [];
+
+  // Add click events to choices
+  document.querySelectorAll('.choice-box').forEach(box => {
+    box.addEventListener('click', () => {
+      const i = parseInt(box.dataset.index);
+      if (selectedChoices.includes(i)) {
+        selectedChoices = selectedChoices.filter(x => x !== i);
+        box.classList.remove('selected');
+      } else {
+        selectedChoices.push(i);
+        box.classList.add('selected');
+      }
+    });
+  });
+
+  resultText.textContent = '';
+  submitBtn.style.display = 'inline-block';
+  doneBtn.style.display = 'none';
+}
+
+function checkAnswer() {
+  const q = questions[currentQuestion];
+  const boxes = document.querySelectorAll('.choice-box');
+  let allCorrect = true;
+
+  boxes.forEach((box, i) => {
+    const isCorrect = q.choices[i].correct;
+    const isSelected = selectedChoices.includes(i);
+    box.classList.remove('correct', 'wrong');
+
+    if (isCorrect && isSelected) {
+      box.classList.add('correct');
+    } else if (!isCorrect && isSelected) {
+      box.classList.add('wrong');
+      allCorrect = false;
+    } else if (isCorrect && !isSelected) {
+      allCorrect = false;
+    }
+  });
+
+  if (allCorrect) {
+    resultText.textContent = 'Good Job!';
+    resultText.style.color = '#4CAF50';
+    submitBtn.style.display = 'none';
+    doneBtn.style.display = 'inline-block';
+  } else {
+    resultText.textContent = 'Oops! Wrong Answer. Try again.';
+    resultText.style.color = '#f44336';
+    // Keep submit visible for retry
+    submitBtn.style.display = 'inline-block';
+    doneBtn.style.display = 'none';
+  }
+}
+
+submitBtn.addEventListener('click', checkAnswer);
+
+doneBtn.addEventListener('click', () => {
+  currentQuestion++;
+  if (currentQuestion < questions.length) {
+    showQuestion(currentQuestion);
+  } else {
+    questionContainer.innerHTML = '<h2>You have completed the worksheet!</h2>';
+    doneBtn.style.display = 'none';
+    resultText.textContent = '';
+    submitBtn.style.display = 'none';
+  }
+});
+
+// Show first question
+showQuestion(currentQuestion);
+</script>
 
 </body>
 </html>

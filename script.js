@@ -94,22 +94,6 @@ function verifyParentPIN() {
 }
 
 // =========================
-// Subscription
-// =========================
-function activateSubscription() {
-  localStorage.setItem("subscriptionActive", "true");
-  alert("Subscription activated!");
-}
-function checkSubscriptionLimit() {
-  const subscribed = localStorage.getItem("subscriptionActive") === "true";
-  const stars = parseInt(localStorage.getItem("stars") || "0");
-  if (!subscribed && stars >= 3) {
-    alert("Free trial ended. Subscribe to unlock more worksheets.");
-    window.location.href = "../parent/home.html";
-  }
-}
-
-// =========================
 // Stars System
 // =========================
 function addStar() {
@@ -132,9 +116,9 @@ function initUniversalWorksheetEngine() {
   const boxes = document.querySelectorAll(".choice-box");
   const inputs = document.querySelectorAll("input.ws-input");
 
-  if (!boxes.length && !inputs.length) return; // not a worksheet page
+  if (!boxes.length && !inputs.length) return;
 
-  checkSubscriptionLimit();
+  // IMPORTANT: Subscription check removed
 
   const passScore = parseInt(main.dataset.pass || "99");
   const submitBtn = document.getElementById("submitBtn");
