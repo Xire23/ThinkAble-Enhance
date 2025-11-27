@@ -96,18 +96,18 @@ function verifyParentPIN() {
 // =========================
 // Subscription
 // =========================
-function activateSubscription() {
-  localStorage.setItem("subscriptionActive", "true");
-  alert("Subscription activated!");
-}
-function checkSubscriptionLimit() {
-  const subscribed = localStorage.getItem("subscriptionActive") === "true";
-  const stars = parseInt(localStorage.getItem("stars") || "0");
-  if (!subscribed && stars >= 3) {
-    alert("Free trial ended. Subscribe to unlock more worksheets.");
-    window.location.href = "../parent/home.html";
-  }
-}
+// function activateSubscription() {
+//   localStorage.setItem("subscriptionActive", "true");
+//   alert("Subscription activated!");
+// }
+// function checkSubscriptionLimit() {
+//   const subscribed = localStorage.getItem("subscriptionActive") === "true";
+//   const stars = parseInt(localStorage.getItem("stars") || "0");
+//   if (!subscribed && stars >= 3) {
+//     alert("Free trial ended. Subscribe to unlock more worksheets.");
+//     window.location.href = "../parent/home.html";
+//   }
+// }
 
 // =========================
 // Stars System
